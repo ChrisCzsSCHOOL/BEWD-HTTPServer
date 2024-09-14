@@ -18,12 +18,6 @@ public class ConnectionHandler {
     private static final String HTTP_STATUS_505 = "505 HTTP VERSION NOT SUPPORTED";
     private static final String INDEX_HTML_PAGE = "pages/index.html";
 
-    private final String HEADER_TEMPLATE = "HTTP/1.1 {{HTTP_STATUS}}\n" +
-            "Date: {{DATE}}\n" +
-            "HttpServer: " + SERVER_NAME + "\n" +
-            "Content-Length: {{CONTENT_LENGTH}}\n" +
-            "Content-Type: text/html\n";
-
     private final Socket socket;
 
     public ConnectionHandler(final Socket socket) {
@@ -115,8 +109,14 @@ public class ConnectionHandler {
             throw new RuntimeException(e);
         }
     }
-
+    // TODO
+    // volgensmij ligt hier het probleem, maar geen idee??
     private String generateHeader(final String status, final String filename) {
+        String HEADER_TEMPLATE = "HTTP/1.1 {{HTTP_STATUS}}\n" +
+                "Date: {{DATE}}\n" +
+                "HttpServer: " + SERVER_NAME + "\n" +
+                "Content-Length: {{CONTENT_LENGTH}}\n" +
+                "Content-Type: text/html\n";
         var header = HEADER_TEMPLATE
                 .replace("{{DATE}}",
                         OffsetDateTime.now().format(DateTimeFormatter.RFC_1123_DATE_TIME))
